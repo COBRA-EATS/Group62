@@ -3,12 +3,12 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: cimg/base:2021.04
+      - image: cimg/node:15.0.1
     steps:
       - checkout
       - run:
           name: Install dependencies and build project
-          command: npm install
+          command: node --version
       - sonarcloud/scan
 
 orbs:
