@@ -1,6 +1,7 @@
-import React from "react";
+import React from 'react';
 import { useEffect, useState } from 'react';
-import jwt_decode from "jwt-decode";
+import jwt_decode from 'jwt-decode';
+import { useQuery } from '@apollo/react-hooks'
 
 const App = () => {
     const [ user, setUser ] = useState({});
