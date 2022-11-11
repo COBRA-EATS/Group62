@@ -11,6 +11,11 @@ module.exports = gql`
         createdBy: String!
         likes: Int
     }
+    type User {
+        name: String!
+        bio: String
+        registerDate: String!
+    }
 
     ### QUERIES ###
     type Query {
@@ -33,6 +38,6 @@ module.exports = gql`
         steps: [String]!
     }
     input registerInput {
-
+        name: String!
     }
 `
