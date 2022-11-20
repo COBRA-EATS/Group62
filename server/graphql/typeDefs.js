@@ -12,7 +12,13 @@ module.exports = gql`
         likes: Int
     }
     type User {
-        name: String!
+        id: ID!
+        username: String!
+        email: String!
+        token: String!
+        password: String!
+        firstName: String!
+        lastName: String!
         bio: String
         registerDate: String!
     }
@@ -28,6 +34,8 @@ module.exports = gql`
         createRecipe(recipeInput: RecipeInput): Recipe
         deleteRecipe(ID: ID!): Boolean!
         editRecipe(ID: ID!, recipeInput: RecipeInput): Boolean!
+        register(registerInput: RegisterInput): User!
+        login(username: String!, password: String!): User!
     }
 
     ### INPUTS ###
@@ -37,7 +45,12 @@ module.exports = gql`
         ingredients: [String]
         steps: [String]!
     }
-    input registerInput {
-        name: String!
+    input RegisterInput {
+        username: String!
+        email: String!
+        password: String!
+        firstName: String!
+        lastName: String!
+        confirmPassword: String!
     }
 `

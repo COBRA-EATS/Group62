@@ -1,0 +1,7 @@
+CLIENT:
+
+npm install @mui/material @emotion/react @emotion/styled
+ @mui/icons-material mui-image react-redux @apollo/client
+
+SERVER:
+ npm install apollo-server dotenv graphql bcryptjs jsonwebtoken
