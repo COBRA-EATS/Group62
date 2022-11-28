@@ -1,15 +1,21 @@
+version: 2.1
+
 jobs:
   build:
     docker:
-      - image: 'node:latest'
+      - image: cimg/node:15.0.1
     steps:
       - checkout
+      - run:
+          name: Install dependencies and build project
+          command: node --version
       - sonarcloud/scan
+
 orbs:
-  sonarcloud: sonarsource/sonarcloud@1.1.0
-version: 2.1
+  sonarcloud: sonarsource/sonarcloud@1.0.3
+
 workflows:
   main:
     jobs:
       - build:
-          context: sonarcloud
+          context: SonarCloud
