@@ -4,7 +4,6 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import React, {useEffect, useState} from 'react'
 import gql from 'graphql-tag'
 import {useMutation} from '@apollo/client'
-import Input from './Input'
 import { bgcolor } from '@mui/system';
 
 
@@ -26,7 +25,7 @@ const StyledPaper = styled(Paper)({
     padding: 10
   });
 //not sure if this is how you would initialize the arrays.
-const initState = {name: '', description: '', ingredients: [], steps: []};
+const initState = {name: '', description: '', ingredients: [''], steps: ['']};
 
 const CreatePost = (props) => {
     const [ingredientInputFields, setIngredientInputFields] = useState([{
@@ -78,15 +77,17 @@ const CreatePost = (props) => {
  
   const [createPost] = useMutation(CREATE_POST, {
     update(_, result){
-        console.log(result)
+        console.log('create post')
         navigate("/")
     },
     onError(err){
+        console.log('test');
         setErrors(err.graphQLErrors[0].extensions.exception.errors);
     },
     variables: formData
   })
   const handleSubmit = (e) => {
+    console.log('test');
     e.preventDefault();
     createPost();
   }
@@ -99,8 +100,8 @@ const CreatePost = (props) => {
                     <Box sx={{ display: 'flex', justifyContent: 'center', bgcolor: 'grey.500', m: 1, border: 3, borderColor: 'secondary.main',  borderRadius: '16px'}}>
                         <Typography sx={{ml: 20, mr: 20}} variant='h3'>Create Post</Typography>
                     </Box>
-                    <TextField name='name' label="Recipie Title" fullWidth/>
-                    <TextField margin="normal" xs={12} label="Description" multiline fullWidth rows={4} name='description'/>
+                    <TextField name='name' label="Recipie Title" handleChange={handleChange} fullWidth/>
+                    <TextField margin="normal" xs={12} label="Description" multiline fullWidth rows={4} name='description' handleChange={handleChange}/>
 
                         <div className="row my">
                         {//ingredient field expansion
@@ -110,7 +111,7 @@ const CreatePost = (props) => {
                                     <div className="row my-3" key={ingredientIndex}>
                                 <div className="col">
                                     <div className="form-group">
-                                        <TextField name="recipieSteps" label='Ingredients' />
+                                        <TextField name="ingredients" label='Ingredients' handleChange={handleChange} />
                                     </div>
                                     </div>
 
@@ -127,7 +128,6 @@ const CreatePost = (props) => {
                                         )
                                     })
                                 }
-
                                 <div className="row">
                                     <div className="col-sm-12">
                                     <Box p={1} >
@@ -146,7 +146,7 @@ const CreatePost = (props) => {
                                     <div className="row my-3" key={stepIndex}>
                                 <div className="col">
                                     <div className="form-group">
-                                        <TextField name="recipieSteps" variant="outlined" label='Steps' />
+                                        <TextField name="steps" variant="outlined" label='Steps' handleChange={handleChange}/>
                                     </div>
                                     </div>
 
@@ -163,7 +163,6 @@ const CreatePost = (props) => {
                                         )
                                     })
                                 }
-
                                 <div className="row">
                                     <div className="col-sm-12">
                                     <Box p={1} >
@@ -193,11 +192,13 @@ const CREATE_POST = gql`
         $ingredients : [String]!
         $steps : [String]!
     ) {
-        login(
-            email: $username
-            password: $password
+        RecipeInput(
+            name : $name
+            description : $description
+            ingredients : $ingredients
+            steps : $steps
         ) {
-            id username email token firstName lastName registerDate
+            id
         }
     }
 `
