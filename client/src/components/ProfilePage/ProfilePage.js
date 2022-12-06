@@ -31,7 +31,7 @@ const ProfilePage = () => {
         <Typography sx={{ml: 0, mr: 0}} variant='h5'>Email: {user.email}</Typography>
         <Typography sx={{ml: 0, mr: 0}} variant='h5'>Bio:</Typography>
         <p className="Bio">{user.bio}</p>
-        <Typography sx={{ml: 0, mr: 0}} variant='h5'>Date registered:</Typography>
+        <Typography sx={{ml: 0, mr: 0}} variant='h5'>Date registered: {user.registerDate}</Typography>
         <Button component={Link} to="/profile/edit" variant="contained" color='primary'>Edit Profile</Button>
     </Container>
   )
