@@ -99,7 +99,17 @@ module.exports = {
         }
     },
     Query: {
-
+        async user(_, { ID }) {
+            try {
+                const user = await User.findById(ID, { password: 0});
+                if (user)
+                    return user;
+                else
+                    throw new Error('User not found');
+            } catch(err) {
+                throw new Error('Error: ' + err);
+            }
+        }
     }
     
 }
