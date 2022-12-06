@@ -3,11 +3,11 @@ const { gql } = require('apollo-server')
 module.exports = gql`
     ### OBJECTS ###
     type Recipe {
-        id: ID!
+        id=ID!
         name: String!
         description: String
-        ingredients: [String]
-        steps: [String]!
+        ingredients: String
+        steps: String!
         createdAt: String!
         createdBy: String!
         likes: Int
@@ -40,9 +40,9 @@ module.exports = gql`
     ### INPUTS ###
     input RecipeInput {
         name: String!
-        description: String
-        ingredients: [String]
-        steps: [String]!
+        description: String!
+        ingredients: String!
+        steps: String!
     }
     input RegisterInput {
         username: String!
