@@ -22,26 +22,15 @@ const StyledPaper = styled(Paper)({
 const Post = () => {
   const like = () =>{
     console.log(isLiked);
-    isLiked = true;
+    setIsLiked(true);
   }
   const unlike = () =>{
     console.log(isLiked);
+    setIsLiked(false);
     isLiked = false;
   }
-  var isLiked = false;
-  const likeButton = isLiked ? (
-    <Button variant="outlined" color='secondary'>
-          Like
-          <ThumbUpAltIcon/>
-           1
-    </Button>
-  ) : (
-    <Button variant="outlined" color='secondary'>
-          Like
-          <ThumbUpOffAltIcon/>
-           1
-    </Button>
-  )
+  const [isLiked, setIsLiked] = useState(false);
+  
   return (
     <Container component="post" maxWidth='md'>
       <StyledPaper elevation={2}>
