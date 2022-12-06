@@ -34,7 +34,7 @@ module.exports = gql`
         createRecipe(recipeInput: RecipeInput): Recipe
         deleteRecipe(id: ID!): Boolean!
         editRecipe(id: ID!, recipeInput: RecipeInput): Boolean!
-        editProfile(id: ID!, editProfileInput: editProfileInput): Boolean!
+        editProfile(editProfileInput: editProfileInput): Boolean!
         register(registerInput: RegisterInput): User!
         login(email: String!, password: String!): User!
     }
