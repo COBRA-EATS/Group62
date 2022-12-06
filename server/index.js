@@ -11,12 +11,7 @@ const typeDefs = require('./graphql/typeDefs');
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: ({req}) => {
-    const auth = req.headers.authorization || '';
-    return {
-      auth
-    };
-  }
+  context: ({req}) => ({req})
 });
 
 mongoose.connect(process.env.URI, { useNewUrlParser: true, useUnifiedTopology: true })
