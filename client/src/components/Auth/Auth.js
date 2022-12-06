@@ -1,13 +1,12 @@
-
+import React, {useEffect, useState, useContext} from 'react'
 import jwt_decode from "jwt-decode";
 import { Avatar, Button, Paper, Grid, Container, Typography, styled} from '@mui/material';
 import { LockOutlined } from '@mui/icons-material';
 import Input from './Input';
 import { Navigate, useNavigate } from "react-router-dom";
-import React, {useEffect, useState} from 'react'
 import gql from 'graphql-tag'
 import {useMutation} from '@apollo/client'
-
+import { AuthContext } from "../../context/auth";
 
 const StyledPaper = styled(Paper)({
     marginTop: 50,
@@ -23,6 +22,7 @@ const StyledAvatar = styled(Avatar)({
 const initState = {firstName: '', lastName: '', email: '', password: '', confirmPassword: ''};
 
 const Auth = (props) => {
+    const context=useContext(AuthContext);
     const [ user, setUser ] = useState({});
 
     function handleCall(res) {
@@ -69,8 +69,8 @@ const Auth = (props) => {
     handleShowPassword(false);
   };
   const [addUser] = useMutation(REGISTER_USER, {
-    update(_, result){
-        console.log(result)
+    update(_, {data: {register: userData}}){
+        context.login(userData)
         navigate("/")
     },
     onError(err){
@@ -80,11 +80,12 @@ const Auth = (props) => {
     variables: formData
   })
   const [loginUser] = useMutation(LOGIN_USER, {
-    update(_, result){
-        console.log(result)
+    update(_, {data: {login: userData}}){
+        context.login(userData)
         navigate("/")
     },
     onError(err){
+        console.log(err.graphQLErrors[0].extensions.exception.errors);
         setErrors(err.graphQLErrors[0].extensions.exception.errors);
     },
     variables: formData
