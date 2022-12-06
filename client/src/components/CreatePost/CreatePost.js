@@ -25,7 +25,6 @@ const StyledPaper = styled(Paper)({
     padding: 10
   });
 //not sure if this is how you would initialize the arrays.
-//comment
 const initState = {name: '', description: '', ingredients: [''], steps: ['']};
 
 const CreatePost = (props) => {

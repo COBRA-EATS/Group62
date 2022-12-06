@@ -1,13 +1,9 @@
 
-import {Button, Paper, Grid, Container, Typography, styled, TextField, Box} from '@mui/material';
-import { Link, Navigate, useNavigate} from "react-router-dom";
-import React, {useEffect, useState, useContext} from 'react'
-import gql from 'graphql-tag'
+import {Button, Paper, Container, Typography, styled, Box} from '@mui/material';
+import {Link} from "react-router-dom";
+import React, {useContext} from 'react'
 
 import {AuthContext} from '../../context/auth'
-import {useMutation} from '@apollo/client'
-import { bgcolor } from '@mui/system';
-import Auth from '../Auth/Auth';
 
 
 const StyledPaper = styled(Paper)({
@@ -40,24 +36,4 @@ const ProfilePage = () => {
     </Container>
   )
 }
-
-//NEED TO EDIT!!
-const CREATE_POST = gql`
-    mutation createRecipe(
-        $name : String!
-        $description : String!
-        $ingredients : [String]!
-        $steps : [String]!
-    ) {
-        login(
-            name : $name
-            description : $description
-            ingredients : $ingredients
-            steps : $steps
-        ) {
-            id username email token firstName lastName registerDate
-        }
-    }
-`
-
 export default ProfilePage;
