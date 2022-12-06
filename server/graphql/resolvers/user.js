@@ -1,8 +1,10 @@
 const User = require('../../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { UserInputError } = require('apollo-server');
+const { UserInputError, AuthenticationError } = require('apollo-server');
 const {validateRegisterInput,validateLoginInput} = require('../../util/validators');
+const { getUser } = require('../../util/authorization');
+const Recipe = require('../../models/Recipe');
 require('dotenv').config();
 const SECRET_KEY = process.env.SECRET_KEY;
 
@@ -96,7 +98,27 @@ module.exports = {
                 id: res.id,
                 token
             };
-        }
+        },
+        async editProfile(_, { ID, editProfileInput: {firstName, lastName, bio} }, context) {
+            const user = await getUser(context.auth);
+                //authorize user to edit profile
+                const profile = await User.findOne({_id: ID}, {password: 0});
+                if(!profile) {
+                    throw new Error('User not found');
+                }
+                if (user.id !== profile.id) {
+                    throw new AuthenticationError('You do not have permission to edit this profile');
+                }
+                try {
+                    const edited = (await User.updateOne(
+                        { _id: ID},
+                        {firstName: firstName, lastName: lastName, bio: bio})).modifiedCount;
+                    return edited;
+                } catch (err) {
+                    console.log(`Error: ${err}`);
+                    throw new Error('Profile edit was unsuccessful');
+                }
+            }
     },
     Query: {
         async user(_, { ID }) {
