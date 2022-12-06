@@ -7,6 +7,7 @@ import Home from "./components/Home/Home";
 import Auth from "./components/Auth/Auth";
 import { AuthProvider } from './context/auth';
 import CreatePost from "./components/CreatePost/CreatePost";
+import Post from "./components/Post/Post";
 
 const App = () => {
     return (

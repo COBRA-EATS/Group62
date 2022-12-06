@@ -1,35 +1,69 @@
-import {Button, Paper, Grid, Container, Typography, styled, TextField, Box} from '@mui/material';
+import {Avatar, Button, Paper, Grid, Container, Typography, styled, TextField, Box} from '@mui/material';
 import { Link, Navigate, useNavigate} from "react-router-dom";
 import React, {useEffect, useState, useContext} from 'react'
-import gql from 'graphql-tag'
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 
-import { bgcolor } from '@mui/system';
+const StyledAvatar = styled(Avatar)({
+  margin: 0,
+  backgroundColor: "#B64955"
+});
 
 const StyledPaper = styled(Paper)({
     marginTop: 50,
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
+    alignItems: 'normal',
     padding: 0,
     justifyContent: 'center',
     
   });
 
-
 const Post = () => {
-    const {user,logout} = useContext(AuthContext);
+  const like = () =>{
+    console.log(isLiked);
+    isLiked = true;
+  }
+  const unlike = () =>{
+    console.log(isLiked);
+    isLiked = false;
+  }
+  var isLiked = false;
+  const likeButton = isLiked ? (
+    <Button variant="outlined" color='secondary'>
+          Like
+          <ThumbUpAltIcon/>
+           1
+    </Button>
+  ) : (
+    <Button variant="outlined" color='secondary'>
+          Like
+          <ThumbUpOffAltIcon/>
+           1
+    </Button>
+  )
   return (
-    <Container component="main" maxWidth='lg'>
-        <Box sx={{ display: 'flex', justifyContent: 'center', bgcolor: 'grey.500', m: 1, border: 3, borderColor: 'secondary.main',  borderRadius: '16px'}}>
-            <Typography sx={{ml: 20, mr: 20}} variant='h3'>Profile</Typography>
-        </Box>
-        <Typography sx={{ml: 0, mr: 0}} variant='h5'>Name: {user.firstName} {user.lastName}</Typography>
-        <Typography sx={{ml: 0, mr: 0}} variant='h5'>Username: {user.username}</Typography>
-        <Typography sx={{ml: 0, mr: 0}} variant='h5'>Email: {user.email}</Typography>
-        <Typography sx={{ml: 0, mr: 0}} variant='h5'>Bio:</Typography>
-        <p className="Bio">{user.bio}</p>
-        <Typography sx={{ml: 0, mr: 0}} variant='h5'>Date registered:</Typography>
-        <Button component={Link} to="/profile/edit" variant="contained" color='primary'>Edit Profile</Button>
+    <Container component="post" maxWidth='md'>
+      <StyledPaper elevation={2}>
+        <Typography sx={{ml: 0, mr: 0}} variant='h5'>Title: {}</Typography>
+        <p className="description">Description: {}</p>
+        <p className="ingredients">Ingredients: {}</p>
+        <p className="steps">Steps: {}</p>
+        <Typography sx={{ml: 0, mr: 0}} variant='body1'>Date Created: {}</Typography>
+        <Typography sx={{ml: 0, mr: 0}} variant='body1'>By: {}</Typography>
+        {isLiked ? 
+          <Button variant="outlined" color='secondary' onClick={unlike}>
+              Unlike
+              <ThumbUpAltIcon/>
+            1
+          </Button> :
+          <Button variant="outlined" color='secondary' onClick={like}>
+              Like
+              <ThumbUpOffAltIcon/>
+            1
+          </Button>
+        }
+        </StyledPaper>
     </Container>
   )
 }
