@@ -22,22 +22,19 @@ module.exports = gql`
         bio: String
         registerDate: String!
     }
-
     ### QUERIES ###
     type Query {
         recipe(ID: ID!): Recipe
         user(ID: ID!): User
     }
-
     ### MUTATIONS ###
     type Mutation {
         createRecipe(recipeInput: RecipeInput): Recipe
         deleteRecipe(ID: ID!): Boolean!
         editRecipe(ID: ID!, recipeInput: RecipeInput): Boolean!
         register(registerInput: RegisterInput): User!
-        login(username: String!, password: String!): User!
+        login(email: String!, password: String!): User!
     }
-
     ### INPUTS ###
     input RecipeInput {
         name: String!

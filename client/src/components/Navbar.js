@@ -2,21 +2,18 @@
 import {
     AppBar,
     Avatar,
-    Badge,
-    Box,
     Button,
     InputBase,
-    Menu,
-    MenuItem,
     styled,
     Toolbar,
     Typography,
   } from "@mui/material";
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Link } from "react-router-dom";
 import logo from './COBRAEATS.png';
 import Image from 'mui-image';
 
+import {AuthContext} from '../context/auth'
 
 const StyledToolbar = styled(Toolbar)({
     backgroundColor:"darkred",
@@ -46,25 +43,37 @@ const StyledToolbar = styled(Toolbar)({
 
 const Navbar = () => {
 
-    const user= null;
+    const {user,logout}= useContext(AuthContext);
 
-    return (
+    const navbar = user ? (
+        <AppBar position='sticky'>
+            <StyledToolbar>
+                <Typography component={Link} to="/"><Image src={logo} height={75} width={75}/></Typography>
+                
+                <Search><InputBase placeholder='search recipes'/></Search>
+                <StyledToolbar>
+                    <Button  variant="contained" color='secondary' >Profile</Button>
+                    <Button variant="contained" color='error' onClick={logout}>Logout</Button>
+                </StyledToolbar>
+            </StyledToolbar>
+        </AppBar>
+    ) : (
         <AppBar position='sticky'>
             <StyledToolbar>
                 <Typography component={Link} to="/"><Image src={logo} height={75} width={75}/></Typography>
                 {/*<Image sx={{src:{logo}, width:'50', height:'50', display: {xs: "block",sm:"none"}}}/>*/}
                 <Search><InputBase placeholder='search recipes'/></Search>
                 <Toolbar>
-                    {user? (
-                        <Profile><Avatar /*alt={user.result.name} src={user.result.imageUrl}*/></Avatar></Profile>
-                    ) : (
-                        <Button component={Link} to="/auth" variant="contained" color='primary'>Sign In</Button>
-                        
-                    )}
+                    <Button component={Link} to="/auth" variant="contained" color='primary'>Sign In</Button>
                 </Toolbar>
             </StyledToolbar>
         </AppBar>
-    )
-}
 
+
+    )
+
+
+
+    return navbar;
+    }
 export default Navbar;

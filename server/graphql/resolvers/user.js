@@ -17,14 +17,14 @@ function createToken(user){
 
 module.exports = {
     Mutation: {
-        async login(_, {username, password}) {
-            const {errors, valid} = validateLoginInput(username, password);
+        async login(_, {email, password}) {
+            const {errors, valid} = validateLoginInput(email, password);
 
             if (!valid) {
                 throw new UserInputError('Errors', {errors})
             }
 
-            const user = await User.findOne({username});
+            const user = await User.findOne({email});
 
             if (!user){
                 errors.general = 'User not found';
@@ -65,6 +65,15 @@ module.exports = {
                         username: 'This username is taken'
                     }
                 })
+            }
+            //Make sure email is not already in use
+            const emailInUse = await User.findOne({ email });
+            if (emailInUse) {
+                throw new UserInputError('Email is already in use', {
+                    errors: {
+                        email: 'Email is already in use'
+                        }
+                    })
             }
 
             //hash password and create auth token

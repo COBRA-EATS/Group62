@@ -1,4 +1,3 @@
-
 const mongoose = require('mongoose');
 const { ApolloServer } = require( 'apollo-server');
 
@@ -12,7 +11,12 @@ const typeDefs = require('./graphql/typeDefs');
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: ({req}) => ({req})
+  context: ({req}) => {
+    const auth = req.headers.authorization || '';
+    return {
+      auth
+    };
+  }
 });
 
 mongoose.connect(process.env.URI, { useNewUrlParser: true, useUnifiedTopology: true })
