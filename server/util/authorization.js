@@ -1,5 +1,7 @@
-const { AuthenticationError } = require("apollo-server-errors");
-const { jwt } = require("jsonwebtoken");
+const { AuthenticationError } = require('apollo-server');
+const jwt = require('jsonwebtoken');
+
+const SECRET_KEY = process.env.SECRET_KEY;
 require('dotenv').config();
 
 module.exports.getUser = async auth => {

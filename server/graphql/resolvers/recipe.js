@@ -1,6 +1,7 @@
+const { AuthenticationError } = require('apollo-server');
 const Recipe = require('../../models/Recipe');
 const { getUser } = require('../../util/authorization');
-require("dotenv").config();
+require('dotenv').config();
 
 module.exports = {
     Query: {
@@ -10,7 +11,7 @@ module.exports = {
                 if (recipe) {
                     return recipe;
                 } else {
-                    throw new Error("Recipe not found");
+                    throw new Error('Recipe not found');
                 }
             } catch(err) {
                 console.log(`Error: ${err}`);
@@ -19,14 +20,14 @@ module.exports = {
     },
     Mutation: {
         async createRecipe(_, {recipeInput: {name, description, ingredients, steps}}, context) {
-            console.log(context.res.getOwnPropertySymbols);
-            const user = await getUser(context.authorization);
+            const user = await getUser(context.auth);
             if (user) {
                 try {
                     const createdRecipe = new Recipe({
                         name: name,
                         description: description,
                         createdAt: new Date().toISOString(),
+                        createdBy: user.id,
                         ingredients: ingredients,
                         steps: steps,
                         likes: 0
@@ -40,7 +41,7 @@ module.exports = {
                     }
                 } catch(err) {
                     console.log(err);
-                    throw new Error("Post creation unsuccessful");
+                    throw new Error('Post creation unsuccessful');
                 }
             }
         },
@@ -53,15 +54,21 @@ module.exports = {
                     return deleted;
                 } catch (err) {
                     console.log(`Error: ${err}`);
-                    throw new Error("Recipe deletion unsuccessful");
+                    throw new Error('Recipe deletion unsuccessful');
                 }
             }
         },
         async editRecipe(_, {ID, recipeInput: {name, description, ingredients, steps}}, context) {
-            const user = getUser(context.auth);
+            const user = await getUser(context.auth);
             if (user) {
                 //authorize user to edit post
+                const recipe = await Recipe.findOne({_id: ID});
 
+                if(!recipe) {
+                    throw new Error('Recipe not found');
+                }
+                if (user.id != recipe.createdBy.toString())
+                    throw new AuthenticationError('You do not have permission to edit this recipe!');
                 try {
                     const edited = (await Recipe.updateOne(
                     { _id: ID },
@@ -69,7 +76,7 @@ module.exports = {
                     return edited;
                 } catch(err) {
                     console.log(`Error: ${err}`);
-                    throw new Error("Recipe edit unsuccessful");
+                    throw new Error('Recipe edit unsuccessful');
                 }
             }
         }
