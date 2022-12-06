@@ -5,10 +5,12 @@ import {Box, Container} from '@mui/material';
 
 import Home from "./components/Home/Home";
 import Auth from "./components/Auth/Auth";
+import { AuthProvider } from './context/auth';
 import CreatePost from "./components/CreatePost/CreatePost";
 
 const App = () => {
     return (
+        <AuthProvider>
         <BrowserRouter>
         <Box>
             <Navbar/>
@@ -19,6 +21,7 @@ const App = () => {
                 </Routes>     
         </Box>
         </BrowserRouter>
+        </AuthProvider>
     );
 }
 
