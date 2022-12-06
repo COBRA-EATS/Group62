@@ -1,22 +1,23 @@
 
 import {
     AppBar,
-    Avatar,
     Button,
     InputBase,
     styled,
     Toolbar,
     Typography,
+
   } from "@mui/material";
 import React, { useState, useContext } from 'react'
 import { Link } from "react-router-dom";
 import logo from './COBRAEATS.png';
 import Image from 'mui-image';
 
-import {AuthContext} from '../context/auth'
+import {AuthContext} from '../../context/auth'
+import MenuList from './MenuList'
 
 const StyledToolbar = styled(Toolbar)({
-    backgroundColor:"darkred",
+    backgroundColor:"#B64955",
     display: "flex",
     justifyContent: "space-between",
   });
@@ -52,8 +53,8 @@ const Navbar = () => {
                 
                 <Search><InputBase placeholder='search recipes'/></Search>
                 <StyledToolbar>
-                    <Button  variant="contained" color='secondary' >Profile</Button>
-                    <Button variant="contained" color='error' onClick={logout}>Logout</Button>
+                    <Button component={Link} to="/createpost" variant="contained" color='primary'>Post</Button>
+                    <MenuList></MenuList>
                 </StyledToolbar>
             </StyledToolbar>
         </AppBar>
@@ -61,7 +62,6 @@ const Navbar = () => {
         <AppBar position='sticky'>
             <StyledToolbar>
                 <Typography component={Link} to="/"><Image src={logo} height={75} width={75}/></Typography>
-                {/*<Image sx={{src:{logo}, width:'50', height:'50', display: {xs: "block",sm:"none"}}}/>*/}
                 <Search><InputBase placeholder='search recipes'/></Search>
                 <Toolbar>
                     <Button component={Link} to="/auth" variant="contained" color='primary'>Sign In</Button>

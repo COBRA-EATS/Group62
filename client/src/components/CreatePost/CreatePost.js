@@ -65,7 +65,6 @@ const CreatePost = (props) => {
   const navigate = useNavigate();
 
   const handleChange = (ingredientIndex, e, stepIndex) => {
-
     setFormData({...formData, [e.target.name]:e.target.value});
     const { name, value } = e.target;
     const ingredientList = [...ingredientInputFields];
