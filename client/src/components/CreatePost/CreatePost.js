@@ -87,7 +87,7 @@ const CREATE_RECIPE = gql`
             steps: $steps
             }
         ) {
-            name description createdAt createdBy ingredients steps likes
+            ID name description createdAt createdBy ingredients steps likes
         }
     }
 `

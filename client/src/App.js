@@ -7,6 +7,7 @@ import Home from "./components/Home/Home";
 import Auth from "./components/Auth/Auth";
 import { AuthProvider } from './context/auth';
 import CreatePost from "./components/CreatePost/CreatePost";
+import ProfilePage from "./components/ProfilePage/ProfilePage"
 
 const App = () => {
     return (
@@ -18,6 +19,7 @@ const App = () => {
                     <Route path="/" exact element={<Home/>}/>
                     <Route path="/auth" exact element={<Auth/>}/>
                     <Route path="/createpost" exact element={<CreatePost/>}/>
+                    <Route path="/profile" exact element={<ProfilePage/>}/>
                 </Routes>     
         </Box>
         </BrowserRouter>
