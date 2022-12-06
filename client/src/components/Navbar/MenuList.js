@@ -90,7 +90,7 @@ export default function MenuListComp() {
                     aria-labelledby="composition-button"
                     onKeyDown={handleListKeyDown}
                   >
-                    <MenuItem onClick={handleClose}>Profile</MenuItem>
+                    <MenuItem onClick={handleClose}component={Link} to="/profile">Profile</MenuItem>
                     <MenuItem onClick={handleClose}>My account</MenuItem>
                     <MenuItem onClick={logout} component={Link} to="/">Logout</MenuItem>
                   </MenuList>
