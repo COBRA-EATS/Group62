@@ -16,6 +16,14 @@ module.exports =  {
             } catch(err) {
                 console.log(`Error: ${err}`);
             }
+        },
+        async feed(_) {
+            try {
+                const feed = await Recipe.find().sort( { createdAt: -1});
+                return feed;
+            } catch(err) {
+                console.log(`Error: ${err}`);
+            }
         }
     },
     Mutation: {
