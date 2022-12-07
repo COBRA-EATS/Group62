@@ -99,20 +99,12 @@ module.exports = {
                 token
             };
         },
-        async editProfile(_, { ID, editProfileInput: {firstName, lastName, bio} }, context) {
-            const user = await getUser(context.auth);
-                //authorize user to edit profile
-                const profile = await User.findOne({_id: ID}, {password: 0});
-                if(!profile) {
-                    throw new Error('User not found');
-                }
-                if (user.id !== profile.id) {
-                    throw new AuthenticationError('You do not have permission to edit this profile');
-                }
-                try {
-                    const edited = (await User.updateOne(
-                        { _id: ID},
-                        {firstName: firstName, lastName: lastName, bio: bio})).modifiedCount;
+        async editProfile(_, { editProfileInput: {firstName, lastName, bio} }, context) {
+            const user = await getUser(context);
+            try {
+                const edited = (await User.updateOne(
+                    { _id: user.id},
+                    {firstName: firstName, lastName: lastName, bio: bio})).modifiedCount;
                     return edited;
                 } catch (err) {
                     console.log(`Error: ${err}`);
