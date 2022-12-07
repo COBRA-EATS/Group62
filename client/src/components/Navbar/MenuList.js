@@ -91,7 +91,6 @@ export default function MenuListComp() {
                     onKeyDown={handleListKeyDown}
                   >
                     <MenuItem onClick={handleClose}component={Link} to="/profile">Profile</MenuItem>
-                    <MenuItem onClick={handleClose}>My account</MenuItem>
                     <MenuItem onClick={logout} component={Link} to="/">Logout</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
