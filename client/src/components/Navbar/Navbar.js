@@ -1,4 +1,3 @@
-
 import {
     AppBar,
     Button,
@@ -15,19 +14,13 @@ import Image from 'mui-image';
 
 import {AuthContext} from '../../context/auth'
 import MenuList from './MenuList'
+import SearchBar from '../Searchbar/searchbar.js'
 
 const StyledToolbar = styled(Toolbar)({
     backgroundColor:"#B64955",
     display: "flex",
     justifyContent: "space-between",
   });
-  
-  const Search = styled("div")(({ theme }) => ({
-    backgroundColor: "white",
-    padding: "0 10px",
-    borderRadius: theme.shape.borderRadius,
-    width: "40%",
-  }));
 
   const Profile = styled("div")(({ theme }) => ({
     display: 'flex',
@@ -50,8 +43,7 @@ const Navbar = () => {
         <AppBar position='sticky'>
             <StyledToolbar>
                 <Typography component={Link} to="/"><Image src={logo} height={75} width={75}/></Typography>
-                
-                <Search><InputBase placeholder='search recipes'/></Search>
+                <SearchBar/>
                 <StyledToolbar>
                     <Button component={Link} to="/createpost" variant="contained" color='primary'>Post</Button>
                     <MenuList></MenuList>
@@ -62,7 +54,7 @@ const Navbar = () => {
         <AppBar position='sticky'>
             <StyledToolbar>
                 <Typography component={Link} to="/"><Image src={logo} height={75} width={75}/></Typography>
-                <Search><InputBase placeholder='search recipes'/></Search>
+                <SearchBar/>
                 <Toolbar>
                     <Button component={Link} to="/auth" variant="contained" color='primary'>Sign In</Button>
                 </Toolbar>
