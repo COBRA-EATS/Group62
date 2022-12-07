@@ -1,12 +1,10 @@
 
 import {Button, Paper, Grid, Container, Typography, styled, TextField, Box} from '@mui/material';
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, {useContext, useEffect, useState} from 'react'
 import gql from 'graphql-tag'
 import {useMutation} from '@apollo/client'
-import Input from './Input'
-import { bgcolor } from '@mui/system';
-import { AuthContext } from '../../context/auth';
+
 
 
 const StyledPaper = styled(Paper)({
