@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import React, {useContext, useEffect, useState} from 'react'
 import {AuthContext} from '../../context/auth'
 import gql from 'graphql-tag'
-import {useMutation} from '@apollo/client'
+import {useMutation, useQuery} from '@apollo/client'
 
 
 const StyledPaper = styled(Paper)({
@@ -21,7 +21,11 @@ const StyledPaper = styled(Paper)({
 const initState = {};
 
 const ProfilePage = () => {
+  
     const {user,logout} = useContext(AuthContext);
+    const {loading, error, userData} = useQuery(GET_USER, {variables: ({userId: user.id})});
+    console.log(user.id);
+    console.log(userData);
     const [errors, setErrors] = useState({});
     const [formData, setFormData] = useState(initState);
     const navigate = useNavigate();
@@ -94,6 +98,16 @@ const EDIT_USER = gql`
   }
 
 `
-
-
+const GET_USER = gql `
+query Query($userId: ID!) {
+  user(id: $userId) {
+    bio
+    email
+    firstName
+    lastName
+    registerDate
+    username
+  }
+}
+`
 export default ProfilePage;
