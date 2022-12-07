@@ -19,7 +19,7 @@ const StyledPaper = styled(Paper)({
     
   });
 
-const Post = () => {
+const Post = ({recipe}) => {
   const like = () =>{
     console.log(isLiked);
     setIsLiked(true);
@@ -34,12 +34,12 @@ const Post = () => {
   return (
     <Container component="post" maxWidth='md'>
       <StyledPaper elevation={2}>
-        <Typography sx={{ml: 0, mr: 0}} variant='h5'>Title: {}</Typography>
-        <p className="description">Description: {}</p>
-        <p className="ingredients">Ingredients: {}</p>
-        <p className="steps">Steps: {}</p>
-        <Typography sx={{ml: 0, mr: 0}} variant='body1'>Date Created: {}</Typography>
-        <Typography sx={{ml: 0, mr: 0}} variant='body1'>By: {}</Typography>
+        <Typography sx={{ml: 0, mr: 0}} variant='h5'>Title: {recipe.name}</Typography>
+        <p className="description">Description: {recipe.description}</p>
+        <p className="ingredients">Ingredients: {recipe.ingredients}</p>
+        <p className="steps">Steps: {recipe.steps}</p>
+        <Typography sx={{ml: 0, mr: 0}} variant='body1'>Date Created: {recipe.createdAt}</Typography>
+        <Typography sx={{ml: 0, mr: 0}} variant='body1'>By: {recipe.createdBy}</Typography>
         {user ? <div>
         {isLiked ? 
           <Button variant="outlined" color='secondary' onClick={unlike}>

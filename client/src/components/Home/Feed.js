@@ -17,8 +17,8 @@ const Feed = () => {
             <div>
                 {loading ? <Typography sx={{ml: 20, mr: 20}} variant='h3'>Loading feed...</Typography>: <div>
                 <Stack direction="column" spacing={0} justifyContent="center">
-                    {data.allFeed.map((recipe) => (
-                        <Post></Post>
+                    {data.feed.map((recipe) => (
+                        <Post key={recipe} recipe={recipe}></Post>
                     ))}
                 </Stack>
                 </div>}
@@ -28,9 +28,12 @@ const Feed = () => {
 }
 
 const GET_FEED = gql`
-    query feed{
-           name id description ingredients steps
+query Query {
+    feed {
+      name description id ingredients steps createdBy createdAt
     }
+  }
+  
 
 `
 
