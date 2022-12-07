@@ -25,6 +25,7 @@ module.exports = gql`
     }
     ### QUERIES ###
     type Query {
+        searchRecipe(keywords: String): [Recipe]
         feed: [Recipe]
         recipe(id: ID!): Recipe
         user(id: ID!): User

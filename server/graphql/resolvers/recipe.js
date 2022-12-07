@@ -1,6 +1,6 @@
 const { AuthenticationError } = require('apollo-server');
 const Recipe = require('../../models/Recipe');
-const checkAuth = require('../../util/authorization');
+const { getUser } = require('../../util/authorization');
 require('dotenv').config();
 
 module.exports =  {
@@ -24,11 +24,21 @@ module.exports =  {
             } catch(err) {
                 console.log(`Error: ${err}`);
             }
+        },
+        async searchRecipe(_, {keywords}) {
+            try {
+                if (!keywords || keywords.length === 0)
+                    throw new Error('Search cannot be empty');
+                const recipes = await Recipe.find({$text: { $search: keywords}});
+                return recipes;
+            } catch(err) {
+                throw new Error(`Error: ${err}`);
+            }
         }
     },
     Mutation: {
         async createRecipe(_, {recipeInput: {name, description, ingredients, steps}}, context) {
-            const user = checkAuth(context);
+            const user = getUser(context);
             if (user) {
                 try {
                     const createdRecipe = new Recipe({
