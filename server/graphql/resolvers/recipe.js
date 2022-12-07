@@ -38,7 +38,8 @@ module.exports =  {
     },
     Mutation: {
         async createRecipe(_, {recipeInput: {name, description, ingredients, steps}}, context) {
-            const user = getUser(context);
+            const user = await getUser(context);
+            console.log(user);
             if (user) {
                 try {
                     const createdRecipe = new Recipe({
@@ -64,7 +65,7 @@ module.exports =  {
             }
         },
         async deleteRecipe(_, {ID}, context) {
-            const user = getUser(context.auth);
+            const user = await getUser(context);
             if (user) {
                 //success if deleted=1, fail if deleted=0
                 try {
@@ -77,7 +78,7 @@ module.exports =  {
             }
         },
         async editRecipe(_, {ID, recipeInput: {name, description, ingredients, steps}}, context) {
-            const user = await getUser(context.auth);
+            const user = await getUser(context);
             if (user) {
                 //authorize user to edit post
                 const recipe = await Recipe.findOne({_id: ID});
