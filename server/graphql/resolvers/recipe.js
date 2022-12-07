@@ -1,9 +1,9 @@
 const { AuthenticationError } = require('apollo-server');
 const Recipe = require('../../models/Recipe');
-const { getUser } = require('../../util/authorization');
+const checkAuth = require('../../util/authorization');
 require('dotenv').config();
 
-module.exports = {
+module.exports =  {
     Query: {
         async recipe(_, {ID}) {
             try {
@@ -16,18 +16,26 @@ module.exports = {
             } catch(err) {
                 console.log(`Error: ${err}`);
             }
+        },
+        async feed(_) {
+            try {
+                const feed = await Recipe.find().sort( { createdAt: -1});
+                return feed;
+            } catch(err) {
+                console.log(`Error: ${err}`);
+            }
         }
     },
     Mutation: {
         async createRecipe(_, {recipeInput: {name, description, ingredients, steps}}, context) {
-            const user = await getUser(context.auth);
+            const user = checkAuth(context);
             if (user) {
                 try {
                     const createdRecipe = new Recipe({
                         name: name,
                         description: description,
                         createdAt: new Date().toISOString(),
-                        createdBy: user.id,
+                        createdBy: user.username,
                         ingredients: ingredients,
                         steps: steps,
                         likes: 0

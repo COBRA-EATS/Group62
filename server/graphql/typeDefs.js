@@ -3,11 +3,11 @@ const { gql } = require('apollo-server')
 module.exports = gql`
     ### OBJECTS ###
     type Recipe {
-        id: ID!
+        id:ID!
         name: String!
         description: String
-        ingredients: [String]
-        steps: [String]!
+        ingredients: String
+        steps: String!
         createdAt: String!
         createdBy: String!
         likes: Int
@@ -25,24 +25,25 @@ module.exports = gql`
     }
     ### QUERIES ###
     type Query {
-        recipe(ID: ID!): Recipe
-        user(ID: ID!): User
+        feed: [Recipe]
+        recipe(id: ID!): Recipe
+        user(id: ID!): User
     }
     ### MUTATIONS ###
     type Mutation {
         createRecipe(recipeInput: RecipeInput): Recipe
-        deleteRecipe(ID: ID!): Boolean!
-        editRecipe(ID: ID!, recipeInput: RecipeInput): Boolean!
-        editProfile(ID: ID!, editProfileInput: editProfileInput): Boolean!
+        deleteRecipe(id: ID!): Boolean!
+        editRecipe(id: ID!, recipeInput: RecipeInput): Boolean!
+        editProfile(id: ID!, editProfileInput: editProfileInput): Boolean!
         register(registerInput: RegisterInput): User!
         login(email: String!, password: String!): User!
     }
     ### INPUTS ###
     input RecipeInput {
         name: String!
-        description: String
-        ingredients: [String]
-        steps: [String]!
+        description: String!
+        ingredients: String!
+        steps: String!
     }
     input RegisterInput {
         username: String!
