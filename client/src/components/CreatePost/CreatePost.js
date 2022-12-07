@@ -24,8 +24,9 @@ const StyledPaper = styled(Paper)({
     alignItems: 'center',
     padding: 10
   });
-//not sure if this is how you would initialize the arrays.
+
 const initState = {name: '', description: '', ingredients: '', steps: ''};
+
 
 const CreatePost = (props) => {
   const [errors, setErrors] = useState({});
@@ -34,7 +35,7 @@ const CreatePost = (props) => {
  
   const [createPost] = useMutation(CREATE_RECIPE, {
     update(_, result){
-        console.log(result)
+        console.log('create post')
         navigate("/")
     },
     variables: formData
@@ -43,6 +44,7 @@ const CreatePost = (props) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   const handleSubmit = (e) => {
+    console.log('test');
     e.preventDefault();
     createPost();
   }
@@ -58,6 +60,7 @@ const CreatePost = (props) => {
                     <TextField name='description'margin="normal" xs={12} label="Description" multiline fullWidth rows={4} onChange={onChange}/>
                     <TextField name='ingredients'margin="normal" xs={12} label="Ingredients" multiline fullWidth rows={4} onChange={onChange}/>
                     <TextField name='steps'margin="normal" xs={12} label="Steps" multiline fullWidth rows={4} onChange={onChange}/>
+
                 </Grid>
                 <Button type='submit' fullWidth variant='contained' color='secondary'>
                     Create Post
@@ -77,6 +80,7 @@ const CREATE_RECIPE = gql`
         $ingredients : String!
         $steps : String!
     ) {
+
         createRecipe(
             recipeInput: {
             name: $name
@@ -85,7 +89,9 @@ const CREATE_RECIPE = gql`
             steps: $steps
             }
         ) {
+
             id name description createdAt createdBy ingredients steps likes
+
         }
     }
 `

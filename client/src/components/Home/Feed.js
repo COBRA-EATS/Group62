@@ -12,6 +12,7 @@ const Feed = () => {
     console.log("data: ");
     console.log(data);
     return (
+
         <Box bgcolor="#dbd8da" justifyContent='center' flex={4} p={2}>
             <h2>Most Recent Posts</h2>
             {error ? <Typography sx={{ml: 20, mr: 20}} variant='h3'>Error getting feed</Typography> : 
@@ -39,4 +40,5 @@ query Query {
 `
 
 export default Feed;
+
 
