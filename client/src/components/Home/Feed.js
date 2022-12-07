@@ -4,12 +4,12 @@ import React from 'react'
 import Post from '../Post/Post'
 import gql from 'graphql-tag'
 const Feed = () => {
-    const {loading, error, data} = useQuery(GET_FEED);
+    const [data] = useQuery(GET_FEED);
     console.log(data);
     return (
         <Box bgcolor="lightslategrey" flex={4} p={2}>Feed
             <Stack direction="column" spacing={0} justifyContent="center">
-                {data.recipe.map((recipe) => (
+                {data.allFeed.map((recipe) => (
                     <Post></Post>
                 ))}
             </Stack>
@@ -20,7 +20,7 @@ const Feed = () => {
 
 const GET_FEED = gql`
     query feed{
-        recipie{
+        allFeed{
             id name description ingredients steps
         }
     }
