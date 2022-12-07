@@ -7,7 +7,7 @@ const recipeSchema = new Schema({
     steps: String,
     likes: Number,
     createdAt: String,
-    createdBy: Schema.Types.ObjectId
+    createdBy: String
 });
 recipeSchema.index( { name : "text", description: "text", ingredients: "text"},
     {weights: {
